@@ -1,3 +1,524 @@
-#wrapper-canvas canvas{
-max-width: 100%;
+#wrapper-canvas canvas {
+  max-width: 100%;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #1788ae;
+}
+
+.swiper-pagination-bullet {
+  background-color: #23b9eb;
+}
+
+/* ---------- Reset & base ---------- */
+:root {
+  --bg-dark: #0f0f11;
+  --neon-1: #1788ae; /* teal */
+  --neon-2: #00a3ff; /* blue */
+  --accent: #14e0ff;
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --muted: rgba(255, 255, 255, 0.6);
+  --muted-2: rgba(255, 255, 255, 0.35);
+  font-family: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg-dark);
+  color: #d9e2ef;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------- HERO (kept simple) ---------- */
+header.site-header {
+  max-width: 1200px;
+  margin: 18px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: relative;
+  z-index: 40;
+}
+header.site-header .logo {
+  width: 72px;
+  height: auto;
+  color: var(--muted);
+}
+.hero {
+  max-width: 1200px;
+  margin: 10px auto 36px;
+  padding: 0 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  position: relative;
+}
+.hero h1 {
+  font-size: 48px;
+  margin: 0;
+  color: #b7d0ff;
+  letter-spacing: 0.2px;
+}
+.hero h2 {
+  margin: 8px 0 0;
+  color: var(--neon-2);
+  font-weight: 700;
+}
+
+/* ---------- NEON BACKGROUND EFFECTS ---------- */
+.neon-background {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0c0c0d 0%, #0f0f11 100%);
+}
+.neon-background .bg-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+      600px 300px at 85% 20%,
+      rgba(20, 80, 160, 0.18),
+      rgba(15, 15, 20, 0) 40%
+    ),
+    radial-gradient(
+      420px 220px at 80% 60%,
+      rgba(60, 70, 140, 0.18),
+      rgba(15, 15, 20, 0) 40%
+    ),
+    radial-gradient(
+      360px 240px at 20% 70%,
+      rgba(30, 20, 40, 0.12),
+      rgba(15, 15, 20, 0) 40%
+    );
+  filter: blur(40px);
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+/* floating dots - repeating radial pattern for subtle dots */
+.floating-dots {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+      circle,
+      rgba(20, 160, 200, 0.35) 2px,
+      transparent 2px
+    ),
+    radial-gradient(circle, rgba(200, 220, 255, 0.05) 1px, transparent 1px);
+  background-size: 180px 180px, 120px 120px;
+  animation: moveDots 20s linear infinite;
+  opacity: 0.18;
+}
+@keyframes moveDots {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-280px);
+  }
+}
+
+/* thin digital stripe (matrix-like) */
+.floating-numbers {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.02) 0px,
+    transparent 1px
+  );
+  background-size: 1px 40px;
+  opacity: 0.04;
+  animation: floatNumbers 24s linear infinite;
+}
+@keyframes floatNumbers {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 -800px;
+  }
+}
+
+/* small animated dots placed absolutely (the "dot" elements) */
+.dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.65;
+  filter: blur(0.6px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+/* You can override positions inline where you add the .dot elements */
+
+/* ---------- CONTENT LAYOUT: about section ---------- */
+section#about {
+  padding: 64px 0;
+  position: relative;
+  z-index: 10;
+}
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  gap: 48px;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 10;
+}
+
+/* left column */
+.about-left h3 {
+  font-size: 22px;
+  margin: 0 0 14px;
+  color: #bff6ff;
+  font-weight: 800;
+}
+.about-left p {
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.7;
+  margin: 0 0 18px;
+  font-size: 15px;
+}
+.about-left .lead {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
+}
+.about-left h4 {
+  margin-top: 8px;
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: 18px;
+}
+.about-left ul {
+  margin: 0;
+  padding-left: 20px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* right cards (compact grid, shifted to the right) */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+}
+.stats-grid .card {
+  width: 100%;
+  max-width: 260px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 26px;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+/* smaller size style like screenshot */
+.card .icon {
+  font-size: 30px;
+  margin-bottom: 8px;
+  opacity: 0.95;
+}
+.card h3 {
+  margin: 6px 0 4px;
+  font-size: 28px;
+  color: rgba(210, 225, 255, 0.95);
+}
+.card p {
+  margin: 0;
+  color: rgba(210, 225, 255, 0.55);
+  font-size: 14px;
+}
+
+/* ---------- GLASS / PREMIUM CARD ---------- */
+.glass-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(65, 200, 230, 0.06);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(20, 120, 160, 0.04) inset;
+  backdrop-filter: blur(10px) saturate(1.1);
+  border-radius: 14px;
+  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.35s;
+  cursor: default;
+  position: relative;
+}
+.glass-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(20, 120, 170, 0.18);
+}
+/* subtle neon outline */
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(20, 160, 200, 0.08),
+    rgba(120, 60, 140, 0.02)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* mouse-follow spotlight -- using CSS vars set by JS */
+.glass-card {
+  --mx: 50%;
+  --my: 50%;
+  background: radial-gradient(
+      circle 120px at var(--mx) var(--my),
+      rgba(23, 136, 174, 0.12),
+      rgba(255, 255, 255, 0.02) 40%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.02),
+      rgba(255, 255, 255, 0.01)
+    );
+}
+.glass-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 240px at var(--mx) var(--my),
+    rgba(0, 163, 255, 0.12),
+    transparent 30%
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.glass-card:hover::after {
+  opacity: 1;
+}
+
+/* small-card adjustments (smaller, right shifted feel) */
+.small-card {
+  padding: 20px;
+  min-height: 120px;
+  border-radius: 16px;
+}
+
+/* position the right-side cards a bit more to the right on large screens */
+@media (min-width: 1024px) {
+  .about-inner {
+    grid-template-columns: 1fr 460px;
+  }
+  .stats-grid {
+    justify-self: end;
+  }
+  .stats-grid .card {
+    transform: translateX(20px);
+  }
+  .card.small {
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-inner {
+    grid-template-columns: 1fr;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card {
+    max-width: 100%;
+  }
+}
+
+/* small helper */
+.muted {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+}
+
+
+
+/* css for tech arsenal section */
+
+.tech-card img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin: 0 auto 10px;
+  display: block;
+}
+
+
+
+/* Tech Filter Buttons */
+
+
+/* ============================
+   TECH GRID LAYOUT
+============================ */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 28px;
+  margin-top: 45px;
+}
+
+#tech{
+  bottom: 2rem;
+}
+/* ============================
+   NEON TECH CARD (with contrasting colors)
+============================ */
+.tech-card {
+  position: relative;
+  padding: 28px 20px;
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.35s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  /* Spotlight mouse coords */
+  --mx: 50%;
+  --my: 50%;
+
+  /* CONTRAST BACKGROUND COLORS */
+  background: 
+    radial-gradient(circle 150px at var(--mx) var(--my),
+      rgba(255, 255, 255, 0.08),
+      transparent 80%
+    ),
+    var(--card-color, #0f0f11);
+}
+
+/* Neon glow on hover */
+.tech-card:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 0 28px rgba(0, 185, 255, 0.45),
+              0 0 65px rgba(0, 185, 255, 0.12);
+}
+
+/* Neon spotlight */
+.tech-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle 250px at var(--mx) var(--my),
+    rgba(0, 225, 255, 0.25),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: 0.35s ease;
+}
+.tech-card:hover::after {
+  opacity: 1;
+}
+
+/* ============================
+   ICON NEON + ROTATION
+============================ */
+.tech-card img {
+  width: 44px;
+  height: 44px;
+  transition: 0.45s ease;
+  filter: drop-shadow(0 0 6px rgba(0, 200, 255, 0.55));
+}
+
+/* Rotate on hover */
+.tech-card:hover img {
+  transform: rotate(20deg) scale(1.08);
+  filter: drop-shadow(0 0 14px rgba(0, 255, 255, 0.9));
+}
+
+/* Label */
+.tech-label {
+  margin-top: 12px;
+  color: #e8f6ff;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.glass-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(65, 200, 230, 0.06);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(20, 120, 160, 0.04) inset;
+  backdrop-filter: blur(10px) saturate(1.1);
+  border-radius: 14px;
+  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.35s;
+  cursor: default;
+  position: relative;
+  padding: 24px;
+}
+
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 6px;
+  background: rgba(10, 12, 15, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: white;
+  transition: border 0.25s, box-shadow 0.25s;
+}
+
+.input-field:focus {
+  border-color: #1788ae;
+  box-shadow: 0 0 10px #1788ae55;
 }

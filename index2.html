@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0f0f11" id="meta-theme-color" />
+  <title>Portfolio — Abdullah Aziz</title>
+
+  <!-- AOS (scroll animations) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- Swiper (if you use it elsewhere) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+  <!-- Tailwind compile: if you already have output.css keep that, otherwise this is fallback -->
+  <!-- <link rel="stylesheet" href="output.css" /> -->
+
+  <style>
+    /* ---------- Reset & base ---------- */
+    :root {
+      --bg-dark: #0f0f11;
+      --neon-1: #1788ae; /* teal */
+      --neon-2: #00a3ff; /* blue */
+      --accent: #14e0ff;
+      --glass-border: rgba(255,255,255,0.08);
+      --glass-bg: rgba(255,255,255,0.03);
+      --muted: rgba(255,255,255,0.6);
+      --muted-2: rgba(255,255,255,0.35);
+      font-family: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body { height:100%; margin:0; background:var(--bg-dark); color:#d9e2ef; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+
+    .container {
+      max-width:1200px; margin:0 auto; padding:0 20px;
+    }
+
+    /* ---------- HERO (kept simple) ---------- */
+    header.site-header {
+      max-width:1200px; margin:18px auto; display:flex; align-items:center; justify-content:space-between; padding:0 20px; position:relative; z-index:40;
+    }
+    header.site-header .logo { width:72px; height:auto; color:var(--muted); }
+    .hero {
+      max-width:1200px; margin: 10px auto 36px; padding: 0 20px;
+      display:flex; gap:16px; align-items:flex-start; position:relative;
+    }
+    .hero h1 { font-size:48px; margin:0; color:#b7d0ff; letter-spacing:0.2px; }
+    .hero h2 { margin:8px 0 0; color:var(--neon-2); font-weight:700; }
+
+    /* ---------- NEON BACKGROUND EFFECTS ---------- */
+    .neon-background { position:relative; overflow:hidden; background:linear-gradient(180deg,#0c0c0d 0%, #0f1113 100%); }
+    .neon-background .bg-gradient {
+      position:absolute; inset:0; z-index:0;
+      background:
+        radial-gradient(600px 300px at 85% 20%, rgba(20,80,160,0.18), rgba(15,15,20,0) 40%),
+        radial-gradient(420px 220px at 80% 60%, rgba(60,70,140,0.18), rgba(15,15,20,0) 40%),
+        radial-gradient(360px 240px at 20% 70%, rgba(30,20,40,0.12), rgba(15,15,20,0) 40%);
+      filter:blur(40px); pointer-events:none; opacity:0.95;
+    }
+
+    /* floating dots - repeating radial pattern for subtle dots */
+    .floating-dots {
+      position:absolute; inset:0; z-index:0; pointer-events:none;
+      background-image:
+        radial-gradient(circle, rgba(20,160,200,0.35) 2px, transparent 2px),
+        radial-gradient(circle, rgba(200,220,255,0.05) 1px, transparent 1px);
+      background-size: 180px 180px, 120px 120px;
+      animation: moveDots 20s linear infinite;
+      opacity:0.18;
+    }
+    @keyframes moveDots { from { transform:translateY(0);} to { transform:translateY(-280px);} }
+
+    /* thin digital stripe (matrix-like) */
+    .floating-numbers {
+      position:absolute; inset:0; z-index:0; pointer-events:none;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.02) 0px, transparent 1px);
+      background-size: 1px 40px;
+      opacity:0.04;
+      animation: floatNumbers 24s linear infinite;
+    }
+    @keyframes floatNumbers { from { background-position:0 0 } to { background-position:0 -800px } }
+
+    /* small animated dots placed absolutely (the "dot" elements) */
+    .dot { position:absolute; width:10px; height:10px; border-radius:50%; background:var(--accent); opacity:0.65; filter:blur(0.6px); transform:translate(-50%,-50%); pointer-events:none; }
+    /* You can override positions inline where you add the .dot elements */
+
+    /* ---------- CONTENT LAYOUT: about section ---------- */
+    section#about { padding:64px 0; position:relative; z-index:10; }
+    .about-inner { display:grid; grid-template-columns: 1fr 460px; gap:48px; align-items:start; max-width:1200px; margin:0 auto; padding:0 20px; position:relative; z-index:10; }
+
+    /* left column */
+    .about-left h3 { font-size:22px; margin:0 0 14px; color:#bff6ff; font-weight:800; }
+    .about-left p { color:rgba(255,255,255,0.65); line-height:1.7; margin:0 0 18px; font-size:15px; }
+    .about-left .lead { font-size:16px; color:rgba(255,255,255,0.8); margin-bottom:20px; }
+    .about-left h4 { margin-top:8px; margin-bottom:12px; color:#fff; font-size:18px; }
+    .about-left ul { margin:0; padding-left:20px; color:rgba(255,255,255,0.75); }
+
+    /* right cards (compact grid, shifted to the right) */
+    .stats-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; justify-items:center; align-items:center; }
+    .stats-grid .card { width:100%; max-width:260px; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:26px; border-radius:14px; position:relative; overflow:hidden; }
+    /* smaller size style like screenshot */
+    .card .icon { font-size:30px; margin-bottom:8px; opacity:0.95; }
+    .card h3 { margin:6px 0 4px; font-size:28px; color:rgba(210,225,255,0.95); }
+    .card p { margin:0; color:rgba(210,225,255,0.55); font-size:14px; }
+
+    /* ---------- GLASS / PREMIUM CARD ---------- */
+    .glass-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(65, 200, 230, 0.06);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6), 0 0 40px rgba(20,120,160,0.04) inset;
+      backdrop-filter: blur(10px) saturate(1.1);
+      border-radius: 14px;
+      transition: transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .35s;
+      cursor: default;
+      position:relative;
+    }
+    .glass-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 60px rgba(20,120,170,0.18); }
+    /* subtle neon outline */
+    .glass-card::before {
+      content:""; position:absolute; inset:0; border-radius:14px; padding:1px;
+      background: linear-gradient(90deg, rgba(20,160,200,0.08), rgba(120,60,140,0.02));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude; pointer-events:none; opacity:0.9;
+    }
+
+    /* mouse-follow spotlight -- using CSS vars set by JS */
+    .glass-card {
+      --mx: 50%;
+      --my: 50%;
+      background:
+        radial-gradient(circle 120px at var(--mx) var(--my), rgba(23,136,174,0.12), rgba(255,255,255,0.02) 40%),
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+    .glass-card::after {
+      content:""; position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; background: radial-gradient(circle 240px at var(--mx) var(--my), rgba(0,163,255,0.12), transparent 30%); opacity:0; transition:opacity .4s;
+    }
+    .glass-card:hover::after { opacity:1; }
+
+    /* small-card adjustments (smaller, right shifted feel) */
+    .small-card { padding:20px; min-height:120px; border-radius:16px; }
+
+    /* position the right-side cards a bit more to the right on large screens */
+    @media (min-width: 1024px) {
+      .about-inner { grid-template-columns: 1fr 460px; }
+      .stats-grid { justify-self:end; }
+      .stats-grid .card { transform: translateX(20px); }
+      .card.small { max-width:320px; }
+    }
+
+    @media (max-width: 900px) {
+      .about-inner { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .card { max-width:100%; }
+    }
+
+    /* small helper */
+    .muted { color: rgba(255,255,255,0.6); font-size:14px; }
+  </style>
+</head>
+<body class="neon-background">
+  <!-- header / hero (kept small so focus is about section) -->
+  <header class="site-header" role="banner">
+    <div class="logo">
+      <!-- simple svg logo -->
+      <svg width="72" height="72" viewBox="0 0 24 24" fill="none" class="logo" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#0b1220"/><path d="M6 18L18 6" stroke="#14e0ff" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </div>
+
+    <div style="display:flex;gap:14px;align-items:center">
+      <button id="themeToggleBtn" title="toggle theme" style="background:transparent;border:1px solid rgba(255,255,255,0.05);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer">Toggle</button>
+      <nav style="color:var(--muted); font-size:14px"> <a href="#about" style="color:var(--neon-2);text-decoration:none;margin-right:12px">About</a> <a href="#projects" style="color:var(--muted);text-decoration:none">Projects</a> </nav>
+    </div>
+  </header>
+
+  <!-- hero area (optional) -->
+  <section class="hero container" style="padding-top:16px;padding-bottom:22px;">
+    <div style="flex:1">
+      <h1>Abdullah Aziz</h1>
+      <h2>Final year B.Tech Student & MERN Developer</h2>
+    </div>
+    <div style="width:220px;text-align:right">
+      <!-- right small nav placeholders -->
+      <div class="muted">Available for freelance & internships</div>
+    </div>
+  </section>
+
+  <!-- ========================= ABOUT SECTION ========================= -->
+
+<section id="about" class="neon-background relative overflow-hidden py-24">
+
+  <!-- Background Effects -->
+  <div class="absolute inset-0 pointer-events-none">
+      <div class="bg-gradient"></div>
+
+      <!-- Floating dots -->
+      <div class="floating-dots">
+        <div class="dot" style="top:18%;left:14%;"></div>
+        <div class="dot" style="top:52%;left:42%;animation-duration:9s;"></div>
+        <div class="dot" style="top:70%;left:30%;animation-duration:7s;"></div>
+        <div class="dot" style="top:75%;left:80%;animation-duration:8s;"></div>
+        <div class="dot" style="top:44%;left:75%;animation-duration:10s;"></div>
+        <div class="dot" style="top:28%;left:60%;animation-duration:6s;"></div>
+        <div class="dot" style="top:10%;left:74%;animation-duration:9s;"></div>
+      </div>
+
+      <!-- Digital matrix noise layer -->
+      <div class="floating-numbers"></div>
+  </div>
+
+  <!-- CONTENT WRAPPER -->
+  <div class="relative max-w-screen-xl mx-auto px-4 z-10">
+
+      <!-- TITLE -->
+      <div class="text-center mb-16" data-aos="fade-down">
+          <h2 class="text-4xl sm:text-5xl font-extrabold text-[#1788ae]">
+              About Me
+          </h2>
+          <p class="text-gray-400 mt-2 text-lg">
+              The story behind the code
+          </p>
+      </div>
+
+      <!-- GRID LAYOUT -->
+      <div class="about-inner">
+
+          <!-- LEFT COLUMN -->
+          <div class="about-left" data-aos="fade-right">
+
+              <h3 class="mt-[-6px] text-[26px] font-bold text-white mb-5">
+                Full Stack Developer & Problem Solver
+              </h3>
+
+              <p class="lead">
+                I'm a final-year B.Tech IT student and full-stack developer passionate about
+                building scalable, responsive, and optimized web applications.
+              </p>
+
+              <p>
+                With strong experience in the MERN stack, backend systems, cloud deployments,
+                and designing modern UI experiences, I enjoy turning complex problems into
+                simple, elegant, and functional solutions.
+              </p>
+
+              <p>
+                I constantly explore new technologies, contribute to innovative projects,
+                and push myself to grow with every new challenge.
+              </p>
+
+              <h4>What drives me:</h4>
+
+              <ul class="space-y-2">
+                <li>• Creating intuitive user experiences that solve real problems</li>
+                <li>• Writing clean, efficient, and scalable code</li>
+                <li>• Collaborating with teams to bring ideas to life</li>
+                <li>• Staying updated with the latest technologies</li>
+              </ul>
+
+          </div>
+
+          <!-- RIGHT CARDS -->
+          <div class="stats-grid" data-aos="fade-left">
+
+              <!-- Card 1 -->
+              <div class="glass-card small-card card" data-aos="zoom-in" data-aos-delay="100">
+                  <div class="icon" style="color:#89e8ff;">{"</>"}</div>
+                  <h3>15+</h3>
+                  <p>Projects Completed</p>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="glass-card small-card card" data-aos="zoom-in" data-aos-delay="200">
+                  <div class="icon" style="color:#89e8ff;">☕</div>
+                  <h3>1000+</h3>
+                  <p>Cups of Coffee</p>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="glass-card small-card card" data-aos="zoom-in" data-aos-delay="300">
+                  <div class="icon" style="color:#ff74b2;">❤</div>
+                  <h3>10+</h3>
+                  <p>Happy Clients</p>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="glass-card small-card card" data-aos="zoom-in" data-aos-delay="400">
+                  <div class="icon" style="color:#8affb5;">⚡</div>
+                  <h3>4+</h3>
+                  <p>Years Experience</p>
+              </div>
+
+          </div>
+
+      </div>
+
+  </div>
+
+</section>
+<!-- ========================= AOS (Scroll Animations) ========================= -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<script>
+  AOS.init({
+    duration: 1100,
+    once: true,
+    easing: "ease-out-cubic"
+  });
+</script>
+
+
+<!-- ========================= Card Glow Mouse-Follow Effect ========================= -->
+<script>
+  document.querySelectorAll(".glass-card").forEach(card => {
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      card.style.setProperty("--x", `${x}px`);
+      card.style.setProperty("--y", `${y}px`);
+    });
+  });
+</script>
+
+
+<!-- ========================= Smooth Scroll for Buttons ========================= -->
+<script>
+  function scrollToProjects() {
+    const section = document.getElementById("projects");
+    section?.scrollIntoView({ behavior: "smooth" });
+  }
+</script>
+
+
+<!-- ========================= Theme Toggle Handler ========================= -->
+<script>
+(() => {
+  const THEME_KEY = "theme";
+  const htmlEl = document.documentElement;
+
+  const toggleBtn = document.getElementById("themeToggleBtn");
+  const sunIcon = document.querySelector(".feather-sun");
+  const moonIcon = document.querySelector(".feather-moon");
+
+  const metaThemeColor = document.getElementById("meta-theme-color");
+
+  function applyTheme(isDark) {
+    if (isDark) {
+      htmlEl.classList.add("dark");
+      sunIcon?.classList.add("hidden");
+      moonIcon?.classList.remove("hidden");
+      metaThemeColor?.setAttribute("content", "#0f0f11");
+    } else {
+      htmlEl.classList.remove("dark");
+      sunIcon?.classList.remove("hidden");
+      moonIcon?.classList.add("hidden");
+      metaThemeColor?.setAttribute("content", "#ffffff");
+    }
+  }
+
+  function initTheme() {
+    const saved = localStorage.getItem(THEME_KEY);
+
+    if (saved === "dark") applyTheme(true);
+    else if (saved === "light") applyTheme(false);
+    else applyTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+  }
+
+  function toggleTheme() {
+    const newDark = !htmlEl.classList.contains("dark");
+    applyTheme(newDark);
+    localStorage.setItem(THEME_KEY, newDark ? "dark" : "light");
+  }
+
+  initTheme();
+  toggleBtn?.addEventListener("click", toggleTheme);
+
+})();
+</script>
+
+
+<!-- ========================= Floating DOTS Animation ========================= -->
+<style>
+.dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #00c8ff;
+    border-radius: 50%;
+    opacity: 0.8;
+    filter: blur(1px);
+    animation: floatDot 8s infinite linear;
+}
+@keyframes floatDot {
+    0% { transform: translateY(0); opacity: .7; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-120px); opacity: .5; }
+}
+</style>
+
+
+<!-- ========================= Footer (Minimal & Clean) ========================= -->
+<footer class="flex flex-col items-center pb-10 mt-20">
+    <p class="text-xs text-gray-400">Abdullah Aziz © 2025</p>
+</footer>
+
+
+</body>
+</html>

@@ -1263,3 +1263,74 @@ section#about {
     justify-content: space-between;
   }
 }
+
+
+
+/* ---------- navbar SECTION ---------- */
+/* ===== Floating Bottom Neon Navbar ===== */
+.floating-nav {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  background: rgba(10, 15, 20, 0.45);
+  backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(23, 136, 174, 0.4);
+  box-shadow: 0 0 22px rgba(23, 136, 174, 0.45),
+              inset 0 0 12px rgba(23, 136, 174, 0.25);
+  padding: 14px 26px;
+  border-radius: 22px;
+  display: flex;
+  gap: 32px;
+}
+
+/* nav item */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #8abfd9;
+  text-decoration: none;
+  font-size: 12px;
+  transition: 0.3s ease;
+}
+
+.nav-item i {
+  font-size: 18px;
+  margin-bottom: 2px;
+  transition: 0.3s ease;
+}
+
+/* hover glow */
+.nav-item:hover i {
+  color: #31c4ff;
+  text-shadow: 0 0 12px #31c4ff;
+  transform: translateY(-4px);
+}
+
+.nav-item:hover span {
+  color: #31c4ff;
+}
+
+/* active effect */
+.nav-item.active i {
+  color: #31c4ff;
+  text-shadow: 0 0 12px #31c4ff, 0 0 20px #31c4ff;
+}
+
+.nav-item.active span {
+  color: #31c4ff;
+}
+
+/* mobile responsive */
+@media (max-width: 600px) {
+  .floating-nav {
+    padding: 12px 20px;
+    gap: 22px;
+  }
+
+  .nav-item i {
+    font-size: 16px;
+  }
+}

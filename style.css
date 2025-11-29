@@ -1334,3 +1334,52 @@ section#about {
     font-size: 16px;
   }
 }
+
+
+
+
+
+
+
+.neon-name {
+  font-family: 'Spartan', sans-serif;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 800;
+  text-align: left;
+
+  /* BASE GRADIENT */
+  background: linear-gradient(
+    90deg,
+    #1788ae,
+    #31c4ff,
+    #b7ffff,
+    #31c4ff,
+    #1788ae
+  );
+  background-size: 300% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  /* GLOW */
+  filter: drop-shadow(0 0 12px rgba(23, 136, 174, 0.6))
+          drop-shadow(0 0 25px rgba(49, 196, 255, 0.4));
+
+  /* ANIMATE GRADIENT */
+  animation: neonFlow 6s linear infinite;
+
+  position: relative;
+}
+
+/* 🌟 SHINE EFFECT */
+
+
+/* KEYFRAMES */
+@keyframes neonFlow {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 300% center;
+  }
+}
